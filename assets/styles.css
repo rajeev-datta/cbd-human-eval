@@ -27,6 +27,49 @@ body {
   opacity: 0.9;
 }
 
+/* Make the app fill the viewport and avoid whole-page scrolling */
+html, body { height: 100%; }
+body { overflow: hidden; }
+
+/* Grid should take remaining height under the header */
+.grid{
+  height: calc(100vh - 72px); /* header height-ish; adjust if your topbar is taller */
+  overflow: hidden;
+}
+
+/* Make columns able to shrink and scroll internally */
+.left, .right { min-height: 0; }
+
+/* Keep the image area visible while descriptors scroll */
+.left{
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Optionally keep the image itself sticky within left column */
+.imgwrap{
+  flex: 0 0 auto;
+}
+
+/* Let the right panel scroll */
+.scrollPanel{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.scrollBody{
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 6px; /* makes scrollbar less cramped */
+}
+
+/* Optional: nicer scrollbar on WebKit */
+.scrollBody::-webkit-scrollbar { width: 10px; }
+.scrollBody::-webkit-scrollbar-thumb { background: #263044; border-radius: 10px; }
+
 .grid{
   display:grid;
   grid-template-columns: 1.6fr 1fr;
