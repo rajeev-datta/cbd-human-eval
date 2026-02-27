@@ -33,12 +33,24 @@ body { overflow: hidden; }
 
 /* Grid should take remaining height under the header */
 .grid{
-  height: calc(100vh - 72px); /* header height-ish; adjust if your topbar is taller */
-  overflow: hidden;
+  height: calc(100vh - 72px); /* adjust if needed */
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  overflow: hidden;          /* prevent body scroll */
+}
+@media (max-width: 980px){
+  .grid{ grid-template-columns: 1fr; height: auto; }
+  body{ overflow: auto; }    /* on mobile, let the page scroll normally */
 }
 
 /* Make columns able to shrink and scroll internally */
-.left, .right { min-height: 0; }
+.left, .right{
+  min-height: 0;
+  overflow-y: auto;          /* <-- key change */
+  padding-right: 6px;        /* space for scrollbar */
+}
 
 /* Keep the image area visible while descriptors scroll */
 .left{
@@ -47,12 +59,17 @@ body { overflow: hidden; }
   min-height: 0;
 }
 
+.left::-webkit-scrollbar,
+.right::-webkit-scrollbar { width: 10px; }
+.left::-webkit-scrollbar-thumb,
+.right::-webkit-scrollbar-thumb { background:#263044; border-radius:10px; }
+
 /* Optionally keep the image itself sticky within left column */
 .imgwrap{
   flex: 0 0 auto;
 }
 
-/* Let the right panel scroll */
+/* Let the right panel scroll
 .scrollPanel{
   height: 100%;
   display: flex;
@@ -63,8 +80,8 @@ body { overflow: hidden; }
 .scrollBody{
   overflow-y: auto;
   min-height: 0;
-  padding-right: 6px; /* makes scrollbar less cramped */
-}
+  padding-right: 6px; /* makes scrollbar less cramped
+} */
 
 /* Optional: nicer scrollbar on WebKit */
 .scrollBody::-webkit-scrollbar { width: 10px; }
@@ -124,6 +141,9 @@ body { overflow: hidden; }
   border-radius: 12px;
   background: #0f121a;
   -webkit-overflow-scrolling: touch;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
 }
 .numstrip.scrollable::-webkit-scrollbar { height: 10px; }
 
