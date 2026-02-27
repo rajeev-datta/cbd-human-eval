@@ -1,0 +1,23 @@
+{
+  "agaricomycetes": [
+    "anomoporia_kamtschatica",
+    "athelia_epiphylla",
+    "geastrum_floriforme",
+    "hyphodontia_alutaria",
+    "laxitextum_bicolor"
+  ],
+  "bivalvia": [
+    "anadara_kagoshimensis",
+    "anodontia_alba",
+    "atrina_rigida",
+    "ctenoides_scaber",
+    "ischadium_recurvum"
+  ],
+  "ulvophyceae": [
+    "acetabularia_acetabulum",
+    "caulerpa_cactoides",
+    "chaetomorpha_coliformis",
+    "cladophora_columbiana",
+    "cladophora_glomerata"
+  ]
+}
