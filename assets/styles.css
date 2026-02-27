@@ -1,140 +1,157 @@
-:root { --pad: 14px; --radius: 14px; }
-* { box-sizing: border-box; }
-/* body {
-  margin:0;
+/* assets/styles.css */
+
+/* =========================
+   Theme + globals
+   ========================= */
+:root{
+  --pad: 14px;
+  --radius: 14px;
+
+  /* Palette */
+  --bg: #0b0c10;          /* page background */
+  --bg2: #0f121a;         /* header / panels */
+  --card: #0b0f1a;        /* list row background */
+  --imgbg: #07080b;       /* image wrapper background */
+
+  --text: #e9eef5;        /* primary text */
+  --muted: #b7c0d0;       /* secondary text */
+
+  --border: #1b2230;      /* borders */
+  --border2: #263044;     /* stronger borders */
+  --hover: #151d30;       /* hover background */
+
+  /* Accent (used by active number button outline) */
+  --accent: #9aa9ff;
+  --accentBg: #182043;
+  --accentBorder: #384a7a;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:#0b0c10;
-  color:#e9eef5;
-} */
-
-html, body { height: 100%; }
-body { overflow: hidden; }
-
-/* One grid definition only (remove the duplicate later one) */
-.grid{
-  height: calc(100vh - 72px); /* adjust if your header height changes */
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 16px;
-  padding: 16px;
-  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden; /* desktop: prevent page scroll; panels handle scroll */
 }
 
-@media (max-width: 980px){
-  .grid{ grid-template-columns: 1fr; height: auto; }
-  body{ overflow: auto; }
-}
-
-/* LEFT should NOT scroll */
-.left{
-  min-height: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* RIGHT scrolls */
-.right{
-  min-height: 0;
-  overflow-y: auto;
-  padding-right: 6px;
-}
-
-/* Let image take remaining vertical space */
-.imgwrap{
-  flex: 1 1 auto;
-  min-height: 0;
-  width: 100%;
-  border: 1px solid #1b2230;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background:#07080b;
-}
-
-/* Make image fit without pushing buttons offscreen */
-.imgwrap img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
+/* =========================
+   Header
+   ========================= */
 .topbar{
   display:flex;
   flex-direction: column;
   gap: 6px;
   padding: 14px 16px;
-  border-bottom: 1px solid #1b2230;
-  background:#0f121a;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
 }
 
 .bigTitle{
   font-size: 20px;
   font-weight: 800;
   letter-spacing: 0.2px;
+  color: var(--text);
 }
 
 .meta{
   font-size: 13px;
-  opacity: 0.9;
+  color: var(--muted);
 }
 
-
-
-.left::-webkit-scrollbar,
-.right::-webkit-scrollbar { width: 10px; }
-.left::-webkit-scrollbar-thumb,
-.right::-webkit-scrollbar-thumb { background:#263044; border-radius:10px; }
-
-/* Let the right panel scroll
-.scrollPanel{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.scrollBody{
-  overflow-y: auto;
-  min-height: 0;
-  padding-right: 6px; /* makes scrollbar less cramped
-} */
-
-/* Optional: nicer scrollbar on WebKit */
-.scrollBody::-webkit-scrollbar { width: 10px; }
-.scrollBody::-webkit-scrollbar-thumb { background: #263044; border-radius: 10px; }
-
+/* =========================
+   Layout grid
+   ========================= */
 .grid{
-  display:grid;
+  height: calc(100vh - 72px); /* adjust if header height changes */
+  display: grid;
   grid-template-columns: 1.6fr 1fr;
   gap: 16px;
   padding: 16px;
+  overflow: hidden;
+  background: var(--bg); /* avoids any white bleed-through */
 }
+
 @media (max-width: 980px){
-  .grid{ grid-template-columns: 1fr; }
+  .grid{
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  body{
+    overflow: auto; /* mobile: allow normal page scroll */
+  }
+}
+
+/* Columns */
+.left{
+  min-height: 0;
+  overflow: hidden;        /* keep left fixed; image scales */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.right{
+  min-height: 0;
+  overflow-y: auto;        /* descriptors scroll */
+  padding-right: 6px;      /* breathing room for scrollbar */
 }
 
 .left, .right{ min-width: 0; }
 
+/* Scrollbar styling (WebKit) */
+.left::-webkit-scrollbar,
+.right::-webkit-scrollbar{ width: 10px; }
+.left::-webkit-scrollbar-thumb,
+.right::-webkit-scrollbar-thumb{ background: var(--border2); border-radius:10px; }
+
+/* =========================
+   Image
+   ========================= */
+.imgwrap{
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--imgbg);
+}
+
+.imgwrap img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* key: keeps controls visible */
+  display: block;
+}
+
+/* =========================
+   Controls
+   ========================= */
 .controls{
   display:flex;
   gap:10px;
   padding-top: 12px;
   align-items:center;
 }
+
 .btn{
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid #263044;
-  background:#121827;
-  color:#e9eef5;
-  cursor:pointer;
+  border: 1px solid var(--border2);
+  background: #121827;
+  color: var(--text);
+  cursor: pointer;
 }
-.btn:hover{ background:#151d30; }
+.btn:hover{ background: var(--hover); }
 
-/* Scrollable index strip */
-.numstrip.scrollable {
+/* =========================
+   Number strip
+   ========================= */
+.numstrip.scrollable{
   margin-top: 12px;
   display: flex;
   flex-wrap: nowrap;
@@ -142,47 +159,62 @@ body { overflow: hidden; }
   overflow-y: hidden;
   gap: 6px;
   padding: 10px 8px;
-  border: 1px solid #1b2230;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #0f121a;
+  background: var(--bg2);
   -webkit-overflow-scrolling: touch;
+
   position: sticky;
   bottom: 0;
   z-index: 10;
+
   flex: 0 0 auto;
 }
 
-.numBtn {
+.numstrip.scrollable::-webkit-scrollbar{ height: 10px; }
+.numstrip.scrollable::-webkit-scrollbar-thumb{
+  background: var(--border2);
+  border-radius: 10px;
+}
+
+.numBtn{
   flex: 0 0 auto;
   min-width: 44px;
   height: 36px;
   padding: 0 12px;
   border-radius: 10px;
-  border: 1px solid #263044;
-  background:#121827;
-  color:#e9eef5;
+  border: 1px solid var(--border2);
+  background: #121827;
+  color: var(--text);
   cursor: pointer;
   font-size: 13px;
   line-height: 36px;
   font-weight: 700;
 }
-.numBtn:hover { background:#151d30; }
-.numBtn.active {
-  outline: 2px solid #9aa9ff;
-  background:#182043;
-  border-color:#384a7a;
+.numBtn:hover{ background: var(--hover); }
+
+.numBtn.active{
+  outline: 2px solid var(--accent);
+  background: var(--accentBg);
+  border-color: var(--accentBorder);
 }
 
+/* =========================
+   Hint
+   ========================= */
 .hint{
   padding-top: 10px;
   font-size: 12px;
-  opacity: 0.85;
+  color: var(--muted);
 }
 
+/* =========================
+   Panels + descriptor list
+   ========================= */
 .panel{
-  border: 1px solid #1b2230;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background:#0f121a;
+  background: var(--bg2);
   padding: var(--pad);
   margin-bottom: 14px;
 }
@@ -192,12 +224,12 @@ body { overflow: hidden; }
   margin-bottom: 10px;
   font-size: 14px;
   letter-spacing: 0.2px;
+  color: var(--text);
 }
 
-/* Descriptor list readability */
 .list{
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -209,13 +241,14 @@ body { overflow: hidden; }
   align-items: flex-start;
   gap: 10px;
   padding: 10px 10px;
-  border: 1px solid #1b2230;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #0b0f1a;
+  background: var(--card);
 }
 
 .descRow.empty{
   opacity: 0.8;
+  color: var(--muted);
 }
 
 .descBadge{
@@ -224,17 +257,17 @@ body { overflow: hidden; }
   text-align: center;
   padding: 6px 8px;
   border-radius: 999px;
-  border: 1px solid #263044;
-  background:#121827;
+  border: 1px solid var(--border2);
+  background: #121827;
   font-weight: 900;
   font-size: 12px;
-  color:#e9eef5;
+  color: var(--text);
 }
 
 .descText{
   flex: 1 1 auto;
   line-height: 1.35rem;
   font-size: 14px;
-  color:#e9eef5;
+  color: var(--text);
   word-break: break-word;
 }
