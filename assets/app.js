@@ -7,7 +7,7 @@ const IMAGE_BASE_URL = ""; // or "https://.../"
 
 // Descriptor JSON location and naming convention.
 // species key in manifest is expected underscore+lowercase, and descriptor file matches that name.
-const DESCRIPTOR_DIR = "descriptors"; // "./descriptors"
+const DESCRIPTOR_DIR = "site_descriptors"; // "./descriptors"
 const DATA_DIR = "data";
 
 const state = {
@@ -138,18 +138,18 @@ async function renderDescriptors(item){
 
   const myDesc = await loadDescriptorsForSpecies(species);
 
-  // Union descriptors from other species in class
-  let classDesc = [];
-  if (otherSpecies.length > 0){
-    const all = await Promise.all(otherSpecies.map(loadDescriptorsForSpecies));
-    classDesc = uniq(all.flat());
-  }
+  // // Union descriptors from other species in class
+  // let classDesc = [];
+  // if (otherSpecies.length > 0){
+  //   const all = await Promise.all(otherSpecies.map(loadDescriptorsForSpecies));
+  //   classDesc = uniq(all.flat());
+  // }
 
-  // Often you want “other class descriptors” to exclude descriptors already in this species list:
-  const otherOnly = classDesc.filter(d => !new Set(myDesc).has(d));
+  // // Often you want “other class descriptors” to exclude descriptors already in this species list:
+  // const otherOnly = classDesc.filter(d => !new Set(myDesc).has(d));
 
   renderList(el("speciesList"), myDesc);
-  renderList(el("classList"), otherOnly);
+  // renderList(el("classList"), otherOnly);
 }
 
 function clampIdx(){
